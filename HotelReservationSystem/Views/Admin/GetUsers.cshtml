@@ -1,0 +1,76 @@
+﻿@model IEnumerable<User>
+@{
+    ViewData["Title"] = "GetUsers";
+}
+
+<h1>Index Of Users</h1>
+<br />
+
+<br />
+
+
+<div class="card mb-4">
+    <div class="card-header">
+        <i class="fas fa-table me-1"></i>
+        DataTable Example
+    </div>
+    <div class="card-body">
+        <table id="datatablesSimple">
+            <thead>
+                <tr>
+
+                    <th> Name</th>
+                    <th>Created At</th>
+                    <th>Email</th>
+                    <th> balance</th>
+                    <th>phone</th>
+                    <th>image</th>
+                </tr>
+            </thead>
+            <tfoot>
+                <tr>
+
+                    <th> Name</th>
+                    <th>Created At</th>
+                    <th>Email</th>
+                    <th> balance</th>
+                    <th>phone</th>
+                    <th>image</th>
+
+                </tr>
+            </tfoot>
+            <tbody>
+                @{
+                    foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@item.Name</td>
+                            <td>@item.CreatedAT</td>
+                            <td>@item.Email</td>
+                            <td>@item.Balance</td>
+                            <td>@item.phone</td>
+                            <td>
+                                <img src="~/@item.ImagePath" height="60px" width="50px" />
+                            </td>
+
+
+                        </tr>
+                    }
+                }
+
+
+
+            </tbody>
+        </table>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#datatablesSimple').DataTable();
+        });
+    </script>
+}

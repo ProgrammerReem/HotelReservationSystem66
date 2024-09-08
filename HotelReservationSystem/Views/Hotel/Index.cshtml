@@ -1,0 +1,82 @@
+﻿@model IEnumerable<Hotel>
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index Of Hotels</h1>
+<br />
+<div>
+    <a class="btn btn-success" asp-action="Create">Create</a>
+</div>
+<br />
+
+
+<div class="card mb-4">
+    <div class="card-header">
+        <i class="fas fa-table me-1"></i>
+        DataTable Example
+    </div>
+    <div class="card-body">
+        <table id="datatablesSimple">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Location</th>
+                    <th>Desc</th>
+                    <th>Rating</th>
+                    <th>Image</th>
+                    <th>Rooms</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tfoot>
+                <tr>
+                    <th>Name</th>
+                    <th>Location</th>
+                    <th>Desc</th>
+                    <th>Rating</th>
+                    <th>Image</th>
+                    <th>Rooms</th>
+                    <th>Actions</th>
+                </tr>
+            </tfoot>
+            <tbody>
+                @{
+                    foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@item.Name</td>
+                            <td>@item.Loc</td>
+                            <td>@item.Desc</td>
+                            <td>@item.Rating</td>
+                            <td><img src="@item.Imagepath" alt="Image" height="80 px" width="100 px"/></td>
+                            <td>@item.rooms.Count</td>
+                            <td>
+                                <a asp-action="Update" asp-route-Id="@item.Id" class="btn btn-info">Update</a>      || <a asp-action="Delete" asp-route-Id="@item.Id" class="btn btn-danger">Delete</a>
+                            </td>
+                        </tr>
+                    }
+                }
+              
+
+           
+            </tbody>
+        </table>
+    </div>
+</div>
+
+@* 
+@section Scripts {
+   @await Html.RenderPartialAsync("_ValidationScriptsPartial");
+
+} *@
+
+@section Scripts {
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#datatablesSimple').DataTable();
+        });
+    </script>
+}

@@ -1,0 +1,54 @@
+﻿@model PageContent
+@{
+    ViewData["Title"] = "PageContent";
+}
+
+<h1>PageContent</h1>
+
+
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="PageContent" method="post" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input asp-for="Id" hidden />
+            <div class="form-group">
+                <label asp-for="Title" class="control-label"></label>
+                <input asp-for="Title" class="form-control" />
+                <span asp-validation-for="Title" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Text" class="control-label"></label>
+                <input asp-for="Text" class="form-control" />
+                <span asp-validation-for="Text" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="AboutUs" class="control-label"></label>
+                <input asp-for="AboutUs" class="form-control" />
+                <span asp-validation-for="AboutUs" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="AboutUsTitle" class="control-label"></label>
+                <input asp-for="AboutUsTitle" class="form-control" />
+                <span asp-validation-for="AboutUsTitle" class="text-danger"></span>
+            </div>
+
+
+            <label>About image:</label>
+            <div class="form-group">
+                <img src="~/@Model.AboutUsImagePath" height="100px" width="100px" alt="..." />
+            </div>
+            <div class="form-group">
+                <label asp-for="AboutUsImageFile" class="control-label"></label>
+                <input type="file" asp-for="AboutUsImageFile" class="form-control" />
+                <span asp-validation-for="AboutUsImageFile" class="text-danger"></span>
+            </div>
+
+            <br />
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+

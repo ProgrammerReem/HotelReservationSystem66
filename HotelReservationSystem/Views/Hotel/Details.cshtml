@@ -1,0 +1,145 @@
+﻿@model HotelDetailsVM
+@{
+    Layout = "_CustomerLayout";
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <title>Modern Business - Start Bootstrap Template</title>
+    <!-- Favicon-->
+    <link rel="icon" type="image/x-icon" href="~/HotelDetail/assets/favicon.ico" />
+    <!-- Bootstrap icons-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
+    <!-- Core theme CSS (includes Bootstrap)-->
+    <link href="~/HotelDetail/css/styles.css" rel="stylesheet" />
+</head>
+<body class="d-flex flex-column h-100">
+    <main class="flex-shrink-0">
+        <!-- Header-->
+        <header class="bg-dark py-5">
+            <div class="container px-5">
+                <div class="row gx-5 align-items-center justify-content-center">
+                    <div class="col-lg-8 col-xl-7 col-xxl-6">
+                        <div class="my-5 text-center text-xl-start">
+                            <h1 class="display-5 fw-bolder text-white mb-2"> Hotel Nam : @Model.Hotel.Name</h1>
+                            <p class="lead fw-normal text-white-50 mb-4"> Hotel Description :  @Model.Hotel.Desc</p>
+                            <p class="lead fw-normal text-white-50 mb-4"> Hotel Location : @Model.Hotel.Loc</p>
+                            <p class="lead fw-normal text-white-50 mb-4"> Hotel Rating : @Model.Hotel.Rating</p>
+
+                        </div>
+                    </div>
+
+
+
+                    <div class="col-xl-5 col-xxl-6 d-none d-xl-block text-center"><img class="img-fluid rounded-3 my-5" src="~/@Model.Hotel.Imagepath" alt="Hotel Image" /></div>
+                </div>
+            </div>
+        </header>
+
+
+        <!-- Blog preview section-->
+        <section class="py-5">
+            <div class="container px-5 my-5">
+                <div class="row gx-5 justify-content-center">
+                    <div class="col-lg-8 col-xl-6">
+                        <div class="text-center">
+                            <h2 class="fw-bolder">Our Rooms</h2>
+                        </div>
+                    </div>
+                </div>
+                <div class="row gx-5">
+
+                    @{
+                        foreach (var item in Model.Hotel.rooms)
+                        {
+                            <div class="col-lg-4 mb-5">
+                                <div class="card h-100 shadow border-0">
+                                    <img class="card-img-top" src="~/@item.ImagePath"  alt="..." />
+                                    <div class="card-body p-4">
+                                        <a class="text-decoration-none link-dark stretched-link" asp-action="Details" asp-controller="Room" asp-route-id="@item.id"><h5 class="card-title mb-3">@item.roomNumber</h5></a>
+                                        <p class="card-text mb-0">@item.Desc</p>
+                                        <p class="card-text mb-0">@item.RoomType</p>
+                                    </div>
+                                    <div class="card-footer p-4 pt-0 bg-transparent border-top-0">
+                                        <div class="d-flex align-items-end justify-content-between">
+                                            <div class="d-flex align-items-center">
+                                                <div class="small">
+                                                    <div  class="fw-bold">$@item.PriceByNight</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    }
+
+
+                </div>
+                <!-- Call to action-->
+                <aside class="bg-primary bg-gradient rounded-3 p-4 p-sm-5 mt-5">
+                    <div class="d-flex align-items-center justify-content-between flex-column flex-xl-row text-center text-xl-start">
+                        <form method="post" asp-controller="Hotel" asp-action="AddRating">
+
+                            <div class="mb-4 mb-xl-0">
+
+                                <label class="control-label"></label>
+                                <input hidden asp-for="HotelRating.HotelId" />
+                                <select asp-for="HotelRating.Rating" class="form-control" asp-items="@(new SelectList(@Model.HotelRating.RatingList))">
+                                    <option disabled selected>
+                                        <div>
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="gold" class="bi bi-star mx-1" viewBox="0 0 16 16">
+                                                <path d="M2.866 14.85c-.078.444.36.791.746.593l.39-.226 1.02-.591 1.528.848.435.242.422-.242 3.74-2.08 1.106-.614c.387-.214.598-.682.48-1.126l-.16-.63.812-3.237.163-.646-.48-.6-2.468-3.09-2.364-.062-.39-.101L8 0l-.514.152-.282.086-.176.048-1.032 1.293L2.723 5.7l-.39.604.163.646.813 3.237-.16.63c-.118.444.092.912.48 1.126L5.25 11.31l1.527-.848 1.02.591.39.226c.385.198.823-.15.746-.593l-.248-.946-2.058-7.962L8 2.183l.156.012.088.001-.088-.013-1.792 6.934-.25.946zM8 11.354l-2.528-1.4L2.6 8.457l.54-2.156L5.118 3.35l2.881 1.748L8 11.354z" />
+                                            </svg>
+
+                                            Rate
+
+                                    </div></option>
+                                </select>
+
+                            </div>
+                            <br />
+                            <br />
+
+                            
+                            <div class="ms-xl-4">
+                                <div class="input-group mb-2">
+
+                                    <button type="submit" class="btn btn-success">Rate</button>
+                                </div>
+                            </div>
+                        </form>
+
+                    </div>
+                </aside>
+            </div>
+        </section>
+    </main>
+
+
+
+    <!-- Footer-->
+    <footer class="bg-dark py-4 mt-auto">
+        <div class="container px-5">
+            <div class="row align-items-center justify-content-between flex-column flex-sm-row">
+                <div class="col-auto"><div class="small m-0 text-white">Copyright &copy; Your Website 2023</div></div>
+                <div class="col-auto">
+                    <a class="link-light small" href="#!">Privacy</a>
+                    <span class="text-white mx-1">&middot;</span>
+                    <a class="link-light small" href="#!">Terms</a>
+                    <span class="text-white mx-1">&middot;</span>
+                    <a class="link-light small" href="#!">Contact</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- Bootstrap core JS-->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Core theme JS-->
+    <script src="~/HotelDetail/js/scripts.js"></script>
+</body>
+</html>

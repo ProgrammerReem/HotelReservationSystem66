@@ -1,0 +1,76 @@
+﻿@model IEnumerable<Reservation>
+@{
+    ViewData["Title"] = "GetUsers";
+}
+
+<h1>Index Of User-Emails</h1>
+<br />
+
+<br />
+
+
+<div class="card mb-4">
+    <div class="card-header">
+        <i class="fas fa-table me-1"></i>
+        DataTable Example
+    </div>
+    <div class="card-body">
+        <table id="datatablesSimple">
+            <thead>
+                <tr>
+
+                    <th> Name</th>
+                    <th>Email</th>
+                    <th>phone</th>
+                    <th>image</th>
+                    <th>Created At</th>
+                </tr>
+            </thead>
+            <tfoot>
+                <tr>
+
+                    <th> Name</th>
+                    <th>Email</th>
+                    <th>phone</th>
+                    <th>image</th>
+                    <th>Created At</th>
+
+
+                </tr>
+            </tfoot>
+            <tbody>
+                @{
+                    foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@item.user.Name</td>
+                            <td>@item.user.Email</td>
+                            <td>@item.user.phone</td>
+                            <td></td>
+                            <td>
+                                <img src="~/@item.user.ImagePath" height="60px" width="50px" alt="No photo" />
+                            </td>
+                            <td>@item.CreatedAt</td>
+
+
+
+                        </tr>
+                    }
+                }
+
+
+
+            </tbody>
+        </table>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#datatablesSimple').DataTable();
+        });
+    </script>
+}

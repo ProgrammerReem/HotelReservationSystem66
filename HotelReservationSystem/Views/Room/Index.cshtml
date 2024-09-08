@@ -1,0 +1,89 @@
+﻿@model IEnumerable<Room>
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index Of Rooms</h1>
+<br />
+<div>
+    <a class="btn btn-success" asp-action="Add">Create</a>
+</div>
+<br />
+
+
+<div class="card mb-4">
+    <div class="card-header">
+        <i class="fas fa-table me-1"></i>
+        DataTable Example
+    </div>
+    <div class="card-body">
+        <table id="datatablesSimple">
+            <thead>
+                <tr>
+                    <th>room Number</th>
+                    <th>hotel Name</th>
+                    <th>Desc</th>
+                    <th>PriceByNight</th>
+                    <th>Image</th>
+                    <th>RoomType</th>
+                    <th>ResidentsCount</th>
+                    <th>reservationsCount</th>
+                    <th>testimonialsCount</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tfoot>
+                <tr>
+                    <th>room Number</th>
+                    <th>hotel Name</th>
+                    <th>Desc</th>
+                    <th>PriceByNight</th>
+                    <th>Image</th>
+                    <th>RoomType</th>
+                    <th>ResidentsCount</th>
+                    <th>reservationsCount</th>
+                    <th>testimonialsCount</th>
+                    <th>Actions</th>
+                </tr>
+            </tfoot>
+            <tbody>
+                @{
+                    foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@item.roomNumber</td>
+                            <td>@item.hotel.Name</td>
+                            <td>@item.Desc</td>
+                            <td>@item.PriceByNight</td>
+                            <td><img src="@item.ImagePath" alt="Image" height="80 px" width="100 px" /></td>
+                            <td>@item.RoomType</td>
+                            <td>@item.Residents.Count</td>
+                            <td>@item.reservations.Count</td>
+                            <td>@item.testimonials.Count</td>
+                            <td><a asp-action="Edit" asp-route-id="@item.id" class="btn btn-info">Edit</a> || <a asp-action="Delete" asp-route-id="@item.id" class="btn btn-danger">Delete</a></td>
+                        </tr>
+                    }
+                }
+
+
+
+            </tbody>
+        </table>
+    </div>
+</div>
+
+@*
+@section Scripts {
+   @await Html.RenderPartialAsync("_ValidationScriptsPartial");
+
+} *@
+
+@section Scripts {
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#datatablesSimple').DataTable();
+        });
+    </script>
+}

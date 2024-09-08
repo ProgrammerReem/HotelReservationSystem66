@@ -1,0 +1,92 @@
+﻿@model IEnumerable<UserTransactions>
+@{
+    ViewData["Title"] = "User TRansactions";
+    Layout = "_CustomerLayout";
+}
+
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<h1>User TRansactions</h1>
+<link rel="stylesheet" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.min.css">
+<link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.7.1/css/buttons.dataTables.min.css">
+<script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+<link href="~/AdminDashboard/css/styles.css" rel="stylesheet" />
+<div class="card mb-4">
+    <div class="card-header">
+        <i class="fas fa-table me-1"></i>
+        DataTable Example
+    </div>
+    <div class="card-body">
+        <table id="datatablesSimple">
+            <thead>
+                <tr>
+                    <th>UserName</th>
+                    <th>Email</th>
+                    <th>room Number</th>
+                    <th>Hotel Name</th>
+                    <th>Total Price</th>
+                    <th> Date </th>
+                </tr>
+            </thead>
+            <tfoot>
+                <tr>
+                    <th>UserName</th>
+                    <th>Email</th>
+                    <th>room Number</th>
+                    <th>Hotel Name</th>
+                    <th>Total Price</th>
+                    <th> Date </th>
+                </tr>
+            </tfoot>
+            <tbody>
+                @{
+                    foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@item.user.Name</td>
+                            <td>@item.user.Email</td>
+                            <td>@item.room.roomNumber</td>
+                            <td>@item.room.hotel.Name</td>
+                            <td>@item.Price</td>
+                            <td>@item.CreatedAt</td>
+
+                        </tr>
+                    }
+                }
+
+
+
+            </tbody>
+        </table>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.7.1/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.7.1/js/buttons.html5.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.68/pdfmake.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.68/vfs_fonts.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $('#datatablesSimple').DataTable({
+                dom: 'Bfrtip',
+                buttons: [
+                    'copyHtml5',
+                    'excelHtml5',
+                    'csvHtml5',
+                    'pdfHtml5'
+                ]
+            });
+        });
+    </script>
+    }

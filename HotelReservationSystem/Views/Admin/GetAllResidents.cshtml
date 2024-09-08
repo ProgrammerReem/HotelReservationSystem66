@@ -1,0 +1,109 @@
+﻿@model IEnumerable<Resident>
+
+
+@{
+    ViewData["Title"] = "GetAllResidents";
+}
+
+<h1>GetAllResidents</h1>
+
+<div class="card mb-4">
+    <div class="card-header">
+        <i class="fas fa-table me-1"></i>
+        DataTable Example
+    </div>
+    <div class="card-body">
+        <div class="row mb-3">
+            <div class="col-md-3">
+                <label for="minCheckIn">Check In From:</label>
+                <input type="date" id="minCheckIn" class="form-control">
+            </div>
+            <div class="col-md-3">
+                <label for="maxCheckOut">Check Out To:</label>
+                <input type="date" id="maxCheckOut" class="form-control">
+            </div>
+        </div>
+        <table id="datatablesSimple">
+            <thead>
+                <tr>
+                    <th>UserName</th>
+                    <th>RoomNumber</th>
+                    <th>HotelName</th>
+                    <th>CheckIn</th>
+                    <th>CheckOut</th>
+                    <th>PriceByNight</th>
+                    <th>TotalCount</th>
+                </tr>
+            </thead>
+            <tfoot>
+                <tr>
+                    <th>UserName</th>
+                    <th>RoomNumber</th>
+                    <th>HotelName</th>
+                    <th>CheckIn</th>
+                    <th>CheckOut</th>
+                    <th>PriceByNight</th>
+                    <th>TotalCount</th>
+                </tr>
+            </tfoot>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.user.Name</td>
+                        <td>@item.room.roomNumber</td>
+                        <td>@item.room.hotel.Name</td>
+                        <td>@item.CheckIn.ToString("yyyy-MM-dd")</td>
+                        <td>@item.CheckOut.ToString("yyyy-MM-dd")</td>
+                        <td>@item.room.PriceByNight</td>
+                        <td>
+                            @{
+                                var daysCount = (item.CheckOut - item.CheckIn).TotalDays;
+                                int price = (int)item.room.PriceByNight;
+                                int totalPrice = (int)daysCount * price;
+                            }
+                            @totalPrice
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+
+@section Scripts {
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            // Custom filtering function which will search data in column four between two values
+            $.fn.dataTable.ext.search.push(
+                function (settings, data, dataIndex) {
+                    var min = $('#minCheckIn').val();
+                    var max = $('#maxCheckOut').val();
+                    var checkIn = data[3]; // use data for the check-in column
+                    var checkOut = data[4]; // use data for the check-out column
+
+                    if (
+                        (min === '' && max === '') ||
+                        (min === '' && checkOut <= max) ||
+                        (min <= checkIn && max === '') ||
+                        (min <= checkIn && checkOut <= max)
+                    ) {
+                        return true;
+                    }
+                    return false;
+                }
+            );
+
+            var table = $('#datatablesSimple').DataTable();
+
+            // Event listener to the two range filtering inputs to redraw on input
+            $('#minCheckIn, #maxCheckOut').change(function () {
+                table.draw();
+            });
+        });
+    </script>
+}

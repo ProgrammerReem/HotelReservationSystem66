@@ -1,0 +1,80 @@
+﻿@model GetAllRoomsVM
+@{
+    ViewData["Title"] = "GetAll";
+    Layout = "_CustomerLayout";
+
+}
+<br />
+<br />
+<br />
+<br />
+<br />
+<h1>All Rooms</h1>
+<br />
+
+<!--Search!-->
+<form method="post" asp-action="GetAll" class=" p-4 ">
+    <input placeholder="Search.." class="w-25 border-dark p-1 rounded-3 " asp-for="Search" />
+    <br />
+    <label class="my-2 d-block">From</label>
+    <input type="date" class="w-25 border-dark p-1 rounded-3 " asp-for="From"/>
+    <br />
+
+    <div class="m-auto"> <label class="mt-2 d-block">To</label>
+        <input type="date" class="w-25 border-dark p-1 rounded-3 " asp-for="To" />
+    </div>
+    
+    <button class="btn btn-primary mt-2" type="submit">Search</button>
+</form>
+
+
+<!-- Portfolio Grid-->
+<section class="page-section bg-light" id="portfolio">
+    <div class="container">
+       
+        <div class="row">
+
+            @* ForLoop From Here *@
+            @{
+                foreach (var item in Model.Rooms)
+                {
+
+                    <div class="col-lg-4 col-sm-6 mb-4">
+                        <!-- Portfolio item 1-->
+                        <div class="portfolio-item">
+                            <a class="portfolio-link" data-bs-toggle="modal" href="">
+
+                               
+                                <img class="img-fluid" src="~/@item.ImagePath" alt="..." />
+                            </a>
+                            <div class="portfolio-caption">
+                                <a asp-action="Details" asp-controller="room" asp-route-id="@item.id" style="text-decoration: none;">
+                                    <div class="portfolio-caption-heading"> @item.roomNumber</div>
+                                    <div class="portfolio-caption-heading"> @item.hotel.Name</div>
+                                    <div class="portfolio-caption-heading"> @item.RoomType</div>
+
+                                    <div class="portfolio-caption-subheading text-muted"> $@item.PriceByNight</div>
+
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
+
+
+
+
+
+        </div>
+    </div>
+</section>
+@section Scripts {
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#datatablesSimple').DataTable();
+        });
+    </script>
+}

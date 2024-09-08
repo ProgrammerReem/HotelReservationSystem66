@@ -1,0 +1,154 @@
+﻿@model RoomDetailsVM
+<!DOCTYPE html>
+@{
+    Layout = "~/Views/Shared/_CustomerLayout.cshtml";
+}
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <title>Modern Business - Start Bootstrap Template</title>
+    <!-- Favicon-->
+    <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+    <!-- Bootstrap icons-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
+    <!-- Core theme CSS (includes Bootstrap)-->
+    <link href="~/HotelDetail/css/styles.css rel="stylesheet" />
+</head>
+
+<body class="d-flex flex-column">
+    <main class="flex-shrink-0">
+
+
+
+
+        <!-- Page Content-->
+        <section class="py-5">
+            <div class="container px-5 my-5">
+                <div class="col-lg-9">
+                    <!-- Post content-->
+                    <article>
+                        <!-- Post header-->
+                        <!-- Preview image figure-->
+                        <!--Form For enroll-->
+                        <Row class=" d-flex align-items-center justify-content-between  ">
+
+                            <div class="col-6">
+
+                                <header class="mb-4">
+                                    <!-- Post title-->
+                                    <h1 class="fw-bolder mb-1">Room Number: @Model.room.roomNumber</h1>
+                                    <!-- Post meta content-->
+                                    <div class="text-muted fst-italic mb-2">Room Description : @Model.room.RoomType</div>
+                                    <div class="text-muted fst-italic mb-2">Price By Night : $@Model.room.PriceByNight</div>
+                                    <p class="fs-5 mb-4"> Room Description: @Model.room.Desc </p>
+
+                                </header>
+
+                                <form asp-action="Enroll" asp-controller="Room" method="post">
+                                   
+                                    <label for="checkin-date" class=" mt-2">Select CheckIn Date:</label>
+                                    <input type="date" asp-for="resveration.checkIn" required>
+                                    <br />
+                                    <input hidden asp-for="resveration.roomid" />
+                                    <label for="checkout-date" class=" mt-2">Select Checkout Date:</label>
+                                    <input type="date" asp-for="resveration.checkOut" required>
+                                    
+                                    @{
+                                        if (ViewBag.DateError != null)
+                                        {
+                                            <p style="color:red">@ViewBag.DateError</p>
+                                        }
+                                    }
+                                    <br />
+                                    <label class=" mt-2">card id</label>
+                                    <input asp-for="resveration.CardId" class="w-25 border-dark p-1 rounded-3 " />
+
+                                    <label class=" mt-2">card cvv</label>
+                                    <input asp-for="resveration.CardCvv" class="w-25 border-dark p-1 rounded-3 " />
+                                    @{
+                                        if (ViewBag.CardError != null)
+                                        {
+                                            <p style="color:red">@ViewBag.CardError</p>
+                                        }
+                                        if (ViewBag.BalanceError != null)
+                                        {
+                                            <p style="color:red">@ViewBag.BalanceError</p>
+                                        }
+                                    }
+
+                                    <button type="submit" class="btn btn-success d-block mt-3 w-25">Book</button>
+                                </form>
+
+                            </div>
+                            <figure class="mb-4"><img class="img-fluid rounded w-100 h-75" src="~/@Model.room.ImagePath" alt="..." /></figure>
+                        </Row>
+
+
+
+                    </article>
+
+                    <!-- Comments section-->
+                    <section>
+                        <form method="post" asp-controller="Admin" asp-action="AddTestimonial">
+                            <input hidden asp-for="testimonialsVM.RoomId" />
+                            <div class="card bg-light">
+                                <div class="card-body">
+                                    <!-- Comment form-->
+                                    <form class="mb-4"><textarea asp-for="testimonialsVM.Text" class="form-control" rows="3" placeholder="Join the discussion and leave a comment!"></textarea></form>
+                                    <button class="btn btn-primary mt-2" type="submit">Add</button>
+                                </div>
+                            </div>
+                        </form>
+                        <br />
+                        <br />
+                        <div class="card bg-light">
+                            <div class="card-body">
+                                <!-- Comment form-->
+                                <div class="d-flex mb-4">
+                                    <!-- Parent comment-->
+                                    <!--Revistion abou Room-->
+                                    <div class="d-flex">
+                                        @{
+                                            if (Model.room.testimonials.Count > 0)
+                                            {
+                                                foreach (var item in Model.room.testimonials)
+                                                {
+                                                    <div class="flex-shrink-0"><img class="rounded-circle" src="~/@item.user.ImagePath" height="131px" width="130px" alt="..." /></div>
+                                                    <div class="ms-3">
+                                                        <div class="fw-bold">@item.user.Name</div>
+                                                        @item.text
+                                                    </div>
+                                                }
+                                            }
+                                            else
+                                            {
+                                                <p>No testimonials yet..</p>
+                                            }
+
+                                        }
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </section>
+                </div>
+            </div>
+            </div>
+        </section>
+    </main>
+
+
+    <!-- Footer-->
+    <!-- Bootstrap core JS-->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Core theme JS-->
+    <script src="~/HotelDetail/js/scripts.js"></script>
+</body>
+</html>

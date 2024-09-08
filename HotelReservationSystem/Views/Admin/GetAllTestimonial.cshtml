@@ -1,0 +1,77 @@
+﻿@model IEnumerable<Testimonial>
+@{
+    ViewData["Title"] = "GetAllTestimonial";
+}
+
+<h1>GetAllTestimonial</h1>
+
+
+
+<div class="card mb-4">
+    <div class="card-header">
+        <i class="fas fa-table me-1"></i>
+        DataTable Example
+    </div>
+    <div class="card-body">
+        <table id="datatablesSimple">
+            <thead>
+                <tr>
+                    <th>UserName</th>
+                    <th>UserImage</th>
+                    <th>RoomNumber</th>
+                    <th>HotelName</th>
+                    <th>CreatedAt</th>
+                    <th>Text</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tfoot>
+                <tr>
+                    <th>UserName</th>
+                    <th>UserImage</th>
+                    <th>RoomNumber</th>
+                    <th>HotelName</th>
+                    <th>CreatedAt</th>
+                    <th>Text</th>
+                    <th>Actions</th>
+                </tr>
+            </tfoot>
+            <tbody>
+                @{
+
+                    foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@item.user.Name</td>
+                            <td> <img src="~/@item.user.ImagePath" alt=".." width="60px" height="70px" />  </td>
+                            <td>@item.room.roomNumber</td>
+                            <td>@item.room.hotel.Name</td>
+                            <td>@item.CreatedAt</td>
+                            <td>@item.text</td>
+                            <td>
+                                <a asp-action="AcceptTest" asp-controller="Admin" asp-route-id="@item.Id" class="btn btn-info">Accept</a>      || <a asp-action="RefuseTest" asp-controller="Admin" asp-route-id="@item.Id" class="btn btn-danger">Refuse</a>
+
+                            </td>
+
+
+                        </tr>
+                    }
+                }
+
+
+
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+@section Scripts {
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#datatablesSimple').DataTable();
+        });
+    </script>
+}
